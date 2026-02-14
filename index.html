@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Per la mia Snu ❤️</title>
+    <style>
+        :root {
+            --bg-color: #FFFDD0; 
+            --accent-red: #e63946;
+            --text-color: #5e548e;
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* Cuoricini di sfondo */
+        .heart-particle {
+            position: absolute; color: var(--accent-red);
+            font-size: 20px; z-index: 1;
+            animation: floatUp 5s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh); opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
+        }
+
+        #main-card {
+            position: relative; z-index: 10;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 40px; border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        /* Foto a cuore */
+        .photo-heart {
+            width: 200px; height: 200px;
+            margin: 0 auto 20px;
+            background: var(--accent-red);
+            clip-path: path('M100 183L85 170C34 124 0 94 0 57C0 25 25 0 57 0C75 0 92 8 100 21C108 8 125 0 143 0C175 0 200 25 200 57C200 94 166 124 115 170L100 183Z');
+        }
+
+        .photo-heart img { width: 100%; height: 100%; object-fit: cover; }
+
+        .btn-group { 
+            display: flex; gap: 20px; justify-content: center; 
+            margin-top: 20px; min-height: 50px;
+        }
+
+        button {
+            padding: 12px 25px; border: none; border-radius: 25px;
+            font-weight: bold; cursor: pointer; font-size: 1rem;
+        }
+
+        #yes-btn { background: var(--accent-red); color: white; }
+        
+        /* Il pulsante "Non tu" */
+        #no-btn { 
+            background: #ccc; color: #333; 
+            transition: all 0.1s ease; /* Movimento fluido ma veloce */
+            position: relative; /* Parte nella sua posizione naturale */
+        }
+
+        #final-page {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; z-index: 1000;
+            background-size: cover; background-position: center;
+            justify-content: center; align-items: center;
+        }
+
+        .final-msg {
+            color: white; font-size: 2.5rem; text-align: center;
+            background: rgba(0,0,0,0.4); padding: 20px; border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-card">
+        <div class="photo-heart"><img src="io.jpg"></div>
+        <h2 style="color: var(--text-color);">Chi è il tuo Valentine?</h2>
+        <div class="btn-group">
+            <button id="yes-btn" onclick="celebrate()">Ovviamente il mio Snu <3</button>
+            <button id="no-btn">Non tu</button>
+        </div>
+    </div>
+
+    <div id="final-page" style="background-image: url('noi.jpg');">
+        <h1 class="final-msg">Buon san Valentino mia dolce Snu!</h1>
+    </div>
+
+    <script>
+        // Pioggia di cuori
+        setInterval(() => {
+            const h = document.createElement('div');
+            h.innerHTML = '❤️';
+            h.className = 'heart-particle';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 5000);
+        }, 400);
+
+        const noBtn = document.getElementById('no-btn');
+
+        function moveNoButton() {
+            // Dimensioni finestra meno margini di sicurezza
+            const padding = 50;
+            const vw = window.innerWidth - noBtn.offsetWidth - padding;
+            const vh = window.innerHeight - noBtn.offsetHeight - padding;
+
+            // Calcolo posizione casuale
+            const newX = Math.floor(Math.random() * vw) + (padding/2);
+            const newY = Math.floor(Math.random() * vh) + (padding/2);
+
+            // Passaggio a position fixed solo al primo movimento
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+        }
+
+        // Trigger sia su mouseover che click
+        noBtn.addEventListener('mouseover', moveNoButton);
+        noBtn.addEventListener('click', moveNoButton);
+
+        function celebrate() {
+            document.getElementById('final-page').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
